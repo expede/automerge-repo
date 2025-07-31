@@ -1,7 +1,9 @@
 import { defineConfig } from "vitest/config"
+import viteConfig from "./vite.config"
 import path from "path"
 
 export default defineConfig({
+  ...viteConfig,
   test: {
     globals: true,
     setupFiles: [path.join(__dirname, "./testSetup.ts")],

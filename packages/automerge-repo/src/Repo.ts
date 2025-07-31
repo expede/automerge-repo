@@ -108,8 +108,7 @@ export class Repo extends EventEmitter<RepoEvents> {
     enableRemoteHeadsGossiping = false,
     denylist = [],
     saveDebounceRate = 100,
-    sedimentreeImplementation,
-    sedimentreeAdapters,
+    sedimentree,
   }: RepoConfig = {}) {
     super()
     this.#remoteHeadsGossipingEnabled = enableRemoteHeadsGossiping
@@ -286,9 +285,9 @@ export class Repo extends EventEmitter<RepoEvents> {
       )
     }
 
-    if (sedimentreeImplementation != null) {
-      this.#sedimentree = sedimentreeImplementation
-      this.#sedimentree.start(sedimentreeAdapters || [])
+    if (sedimentree != null) {
+      this.#sedimentree = sedimentree
+      this.#sedimentree.start()
     }
   }
 
@@ -578,6 +577,11 @@ export class Repo extends EventEmitter<RepoEvents> {
     }
     this.#progressCache[documentId] = result
     return result
+  }
+
+  // FIXME remove
+  sedimentree(): Sedimentree | undefined {
+    return this.#sedimentree
   }
 
   async #loadDocumentWithProgress<T>(
@@ -918,9 +922,7 @@ export interface RepoConfig {
    */
   saveDebounceRate?: number
 
-  sedimentreeImplementation?: Sedimentree
-
-  sedimentreeAdapters?: NetworkAdapterInterface[]
+  sedimentree?: Sedimentree
 }
 
 /** A function that determines whether we should share a document with a peer
