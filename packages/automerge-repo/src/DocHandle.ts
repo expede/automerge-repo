@@ -770,7 +770,7 @@ export interface DocHandleEvents<T> {
 /** Emitted when this document's heads have changed */
 export interface DocHandleEncodedChangePayload<T> {
   handle: DocHandle<T>
-  doc: A.Doc<T>
+  doc: A.Doc<T> // NOTE here for backwards compatibility; it's the same as handle.doc()
 }
 
 /** Emitted when this document has changed */
